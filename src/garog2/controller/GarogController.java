@@ -22,6 +22,5 @@ public class GarogController implements ChangeListener
         // Wenn der Sliderwert sich verändert hat, dann den aktuellen Wert in
         // die Daten schreiben
         m.setValue(((JSlider) e.getSource()).getValue());
-        //System.out.println(m.getValue());
     }
 }

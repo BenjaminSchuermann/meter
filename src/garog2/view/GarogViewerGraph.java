@@ -40,10 +40,13 @@ public class GarogViewerGraph extends JComponent {
         return new Runnable() {
             @Override
             public void run() {
+                //Das 10ms "Programm"
+                //Zum ersten starten jeweils alle nötige zurücksetzen
                 if (m.isStartstop()) {
                     restart();
                     m.setStartstop(false);
                 }
+                //und los gehts
                 tick();
             }
         };
@@ -52,7 +55,7 @@ public class GarogViewerGraph extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Weißes Tracefeld anlegen
+        // Tracefeld anlegen
         g.setColor(Color.DARK_GRAY);
         g.fillRect(46, 40, 900, 360);
         // schwarze Tracefeldumrand anlegen
@@ -83,7 +86,7 @@ public class GarogViewerGraph extends JComponent {
         for (int i = 0; i < 6; i++) {
             g.drawLine(45, 40 + (i * 60), 945, 40 + (i * 60));
         }
-        // zu guter Letzt die schwarze Kurve zeichnen
+        // zu guter Letzt die Kurve zeichnen
         g.setColor(Color.GREEN);
         for (int i = 1; i < graphValues.length; i++) {
             g.drawLine(i + 46, (360 - graphValues[i - 1]) + 40, i + 46, (360 - graphValues[i]) + 40);

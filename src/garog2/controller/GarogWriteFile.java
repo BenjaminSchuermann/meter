@@ -20,6 +20,7 @@ public class GarogWriteFile implements ActionListener
     public GarogWriteFile(GarogModel m)
     {
         this.m = m;
+        //todo anpassen auf PI System
         defaultFolder = new File("/home/garog");
     }
 
@@ -32,15 +33,15 @@ public class GarogWriteFile implements ActionListener
             BufferedWriter outStream = new BufferedWriter(outFile);
             for (int k = 0; k < m.getListenLaenge(); k++)
             {
+                //Zeilen in die Datei schreiben
                 outStream.write(m.getZeitstemple(k).toString() + ";" + m.getMesserte(k).toString());
                 outStream.newLine();
                 outStream.flush();
             }
             outStream.close();
-            // ...eine Systemmeldung ausgegeben (hier noch ein
-            // Statusfenster anfügen)
-            //System.out.println("Data saved.");
+            // Statusfenster
             JOptionPane.showMessageDialog(null, "Data saved");
+            //System.out.println("Data saved.");
         }
         catch (IOException e)
         {
