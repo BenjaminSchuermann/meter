@@ -9,11 +9,15 @@ public class GarogViewerGraph extends JComponent {
     private GarogModel m;
 
     private int[] graphValues;
+    private int lv;
+    private long startzeit;
 
     public GarogViewerGraph(GarogModel m) {
         // Daten initialisieren
         this.m = m;
         graphValues = new int[900];
+        startzeit = m.getStartzeit();
+        lv=0;
     }
 
     private void tick() {
@@ -22,15 +26,21 @@ public class GarogViewerGraph extends JComponent {
         // in den letzten Wert den Wert des Sliders setzen todo analogwert
         graphValues[graphValues.length - 1] = m.getValue();
         // und in den Daten den Messwert und Zeitstempel setzen
-        m.setMesswerte((int) (System.currentTimeMillis() - m.getStartzeit()), m.getValue());
+        m.setMesswerte((int) (System.currentTimeMillis() - startzeit), m.getValue());
 
-        repaint();
+        //PI Ressourcen... -.-*
+        lv++;
+        if(lv>5) {
+            repaint();
+            lv = 0;
+        }
     }
 
     private void restart() {
         // zu Beginn alles zurücksetzen für die Kurve
         m.resetListen();
         m.setStartzeit(System.currentTimeMillis());
+        startzeit = m.getStartzeit();
         for (int i = 0; i < graphValues.length; i++) {
             graphValues[i] = 0;
         }
