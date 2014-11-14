@@ -2,7 +2,7 @@ package garog2.controller;
 
 import garog2.model.GarogModel;
 
-import javax.swing.*;
+//todo entfernen
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -18,6 +18,6 @@ public class GarogController implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         // Wenn der Sliderwert sich verändert hat, dann den aktuellen Wert in
         // die Daten schreiben
-        m.setValue(((JSlider) e.getSource()).getValue());
+        //m.setValue(((JSlider) e.getSource()).getValue());
     }
 }

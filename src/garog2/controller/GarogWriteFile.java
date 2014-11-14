@@ -19,7 +19,7 @@ public class GarogWriteFile implements ActionListener {
     public GarogWriteFile(GarogModel m) {
         this.m = m;
         //todo anpassen auf PI System
-        defaultFolder = new File("/home/garog");
+        defaultFolder = new File("/home/pi");
     }
 
     private void createFile() {

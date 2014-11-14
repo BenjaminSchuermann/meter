@@ -1,13 +1,16 @@
 package garog2.view;
 
+//todo mit nur wiringpi ersetzen wenn möglich
+
+import com.pi4j.wiringpi.Spi;
 import garog2.model.GarogModel;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GarogViewerGraph extends JComponent {
+    byte spiData[] = new byte[3];
     private GarogModel m;
-
     private int[] graphValues;
     private int lv;
     private long startzeit;
@@ -17,23 +20,39 @@ public class GarogViewerGraph extends JComponent {
         this.m = m;
         graphValues = new int[900];
         startzeit = m.getStartzeit();
-        lv=0;
+        lv = 0;
+        Spi.wiringPiSPISetup(Spi.CHANNEL_0, 500000);
+
     }
 
     private void tick() {
+        //Analogwert holen und skalieren
+        int messwert = (int) ((test() - 45) / 2.7194);
         // Die Werte einen weiter schieben
         System.arraycopy(graphValues, 1, graphValues, 0, graphValues.length - 1);
-        // in den letzten Wert den Wert des Sliders setzen todo analogwert
-        graphValues[graphValues.length - 1] = m.getValue();
+        //todo analogwert beschreiben
+        graphValues[graphValues.length - 1] = messwert;
         // und in den Daten den Messwert und Zeitstempel setzen
-        m.setMesswerte((int) (System.currentTimeMillis() - startzeit), m.getValue());
+        m.setMesswerte((int) (System.currentTimeMillis() - startzeit), messwert);
 
-        //PI Ressourcen... -.-*
         lv++;
-        if(lv>5) {
+        if (lv > 5) {
             repaint();
             lv = 0;
         }
+    }
+
+    public int test() {
+        //todo noch beschreiben
+        int a2dVal;
+        spiData[0] = 1;
+        spiData[1] = (byte) 0b10000000;
+        spiData[2] = 0;
+        Spi.wiringPiSPIDataRW(0, spiData, 3);
+
+        a2dVal = (spiData[1] << 8) & 0b1100000000; //merge data[1] & data[2] to get result
+        a2dVal |= (spiData[2] & 0xff);
+        return a2dVal; //((spiData [0] << 7) | (spiData [1] >> 1)) & 0x3FF ;
     }
 
     private void restart() {
