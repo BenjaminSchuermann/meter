@@ -9,6 +9,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GarogWriteFile implements ActionListener {
 
@@ -19,13 +21,17 @@ public class GarogWriteFile implements ActionListener {
     public GarogWriteFile(GarogModel m) {
         this.m = m;
         //todo anpassen auf PI System
-        defaultFolder = new File("/home/pi");
+        defaultFolder = new File("/home/pi/messwerte");
     }
 
     private void createFile() {
+        Date dNow = new Date( );
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyyMMdd_hhmmss");
+
+        System.out.println("Current Date: " + ft.format(dNow));
         try {
             // Dateipfad angeben, ggf. default
-            FileWriter outFile = new FileWriter(checkFolder() + "/measuredvalues.csv");
+            FileWriter outFile = new FileWriter(checkFolder() + "/" + ft.format(dNow) + "_measuredvalues.csv");
             BufferedWriter outStream = new BufferedWriter(outFile);
             for (int k = 0; k < m.getListenLaenge(); k++) {
                 //Zeilen in die Datei schreiben
