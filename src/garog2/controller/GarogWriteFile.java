@@ -25,10 +25,10 @@ public class GarogWriteFile implements ActionListener {
     }
 
     private void createFile() {
+        //Datum anlegen und formatieren
         Date dNow = new Date( );
         SimpleDateFormat ft = new SimpleDateFormat ("yyyyMMdd_hhmmss");
 
-        System.out.println("Current Date: " + ft.format(dNow));
         try {
             // Dateipfad angeben, ggf. default
             FileWriter outFile = new FileWriter(checkFolder() + "/" + ft.format(dNow) + "_measuredvalues.csv");
