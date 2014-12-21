@@ -40,6 +40,10 @@ public class GarogWriteFile implements ActionListener {
                 outStream.flush();
             }
             outStream.close();
+            //Dateirecht ändern um sie löschen zu können
+            File f = new File(checkFolder() + "/" + ft.format(dNow) + "_measuredvalues.csv");
+            f.setWritable(true,false);
+
             // Statusfenster
             JOptionPane.showMessageDialog(null, "Data saved");
             //System.out.println("Data saved.");
